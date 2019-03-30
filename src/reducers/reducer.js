@@ -1,28 +1,32 @@
-import { ALL, DONE, NOT_DONE, ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE } from '../constants/Task';
+import { ALL, DONE, NOT_DONE, ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE } from '../constants/Task';
 
 const initialState = {
   task: {
     name: '',
     status: '',
+    deadLine: new Date(),
   },
   tasks: [],
   printTask: ALL,
 };
 
 export default function Reducer(state = initialState, action) {
+  console.log(state.task);
+  const task = state.task;
   switch (action.type) {
     case INPUT_TASK:
       return {
         ...state,
         task: {
+          ...task,
           name: action.payload.task,
-          // status: state.task.status,
         }
       }
     case ADD_TASK:
       const newTask = {
         id: state.tasks.length,
         name: action.payload.task,
+        deadLine: state.task.deadLine,
         status: NOT_DONE,
       };
       return {
@@ -30,6 +34,7 @@ export default function Reducer(state = initialState, action) {
         task: {
           name: '',
           status: '',
+          deadLine: new Date(),
         },
         tasks: state.tasks.concat([newTask]),
       }
@@ -46,6 +51,14 @@ export default function Reducer(state = initialState, action) {
       return {
         ...state,
         printTask: action.payload.printTask,
+      };
+    case SELECT_DATE:
+      return {
+        ...state,
+        task: {
+          ...task,
+          deadLine: action.payload.deadLine,
+        }
       };
     default:
       return state;
