@@ -1,4 +1,4 @@
-import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE } from '../constants/Task'
+import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK } from '../constants/Task'
 
 // タスク名入力時のアクション、入力中タスク名が渡される
 export function inputTask(task) {
@@ -49,6 +49,22 @@ export function selectDeadLine(date) {
     type: SELECT_DATE,
     payload: {
       deadLine: date,
+    }
+  }
+}
+
+// タスク削除クリック時のアクション、該当タスクのインデックスが渡される
+export function deleteTask(taskId) {
+  if (window.confirm("削除してよろしいですか")) {
+    return {
+      type: DELETE_TASK,
+      payload: {
+        taskId,
+      }
+    }
+  } else {
+    return {
+      type: "NONE",
     }
   }
 }

@@ -7,3 +7,4 @@ export const ADD_TASK = "ADD_TASK";
 export const DONE_TASK = "DONE_TASK";
 export const SELECT_TASKTYPE = "SELECT_TASKTYPE";
 export const SELECT_DATE = "SELECT_DATE";
+export const DELETE_TASK = "DELETE_TASK";

@@ -11,7 +11,7 @@ const convertDateToStr = (date) => (
 );
 
 export default function TodoApp(props) {
-  let { task, tasks, printTask, inputTask, addTask, doneTask, selectTaskType, selectDeadLine } = { ...props };
+  let { task, tasks, printTask, inputTask, addTask, doneTask, deleteTask, selectTaskType, selectDeadLine } = { ...props };
 
   // 表示するタスク一覧に絞り込み
   let printTasks = tasks.slice();
@@ -43,7 +43,7 @@ export default function TodoApp(props) {
           selected={task.deadLine}
           onChange={selectDeadLine}
         />
-        <input type="button" onClick={() => addTask(task.name)} value="Add" />
+        <input type="button" onClick={() => addTask(task.name)} value="追加" />
       </section>
 
       <section>
@@ -73,6 +73,7 @@ export default function TodoApp(props) {
                     <div>
                       <span>{item.name}</span>
                       <input type="button" onClick={() => doneTask(item.id)} value={item.status} />
+                      <input type="button" onClick={() => deleteTask(item.id)} value="削除" />
                     </div>
                   </li>
                 </div>
