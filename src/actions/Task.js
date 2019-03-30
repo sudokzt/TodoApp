@@ -1,4 +1,4 @@
-import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK } from '../constants/Task'
+import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK } from '../constants/Task'
 
 // タスク名入力時のアクション、入力中タスク名が渡される
 export function inputTask(task) {
@@ -65,6 +65,34 @@ export function deleteTask(taskId) {
   } else {
     return {
       type: "NONE",
+    }
+  }
+}
+
+// [編集or完了]ボタンクリック時のアクション、モードが変更される。押したモードが渡される
+export function editMode() {
+  return {
+    type: EDIT_MODE,
+  }
+}
+
+// タスク名入力時のアクション、入力中タスク名が渡される
+export function inputEditingTask(task, taskId) {
+  return {
+    type: INPUT_EDITTING_TASK,
+    payload: {
+      task,
+      taskId,
+    }
+  }
+}
+
+// タスク編集クリック時のアクション、該当タスクの編集後の値とインデックスが渡される
+export function editTask(taskId) {
+  return {
+    type: EDIT_TASK,
+    payload: {
+      taskId,
     }
   }
 }

@@ -1,4 +1,8 @@
-import { ALL, DONE, NOT_DONE, ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK } from '../constants/Task';
+import {
+  ALL, DONE, NOT_DONE,
+  NORMAL, EDIT,
+  ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK
+} from '../constants/Task';
 
 const initialState = {
   task: {
@@ -7,7 +11,9 @@ const initialState = {
     deadLine: new Date(),
   },
   tasks: [],
+  editTasks: [],
   printTask: ALL,
+  mode: NORMAL,
 };
 
 export default function Reducer(state = initialState, action) {
@@ -66,6 +72,31 @@ export default function Reducer(state = initialState, action) {
       return {
         ...state,
         tasks: deletedTasks,
+        editTasks: deletedTasks.slice() // 編集モード時に変更したタスクを保存するための配列
+      };
+    case EDIT_MODE:
+      return {
+        ...state,
+        mode: (state.mode === EDIT) ? NORMAL : EDIT,
+        editTasks: state.tasks.slice() // 編集モード時に変更したタスクを保存するための配列
+      };
+    case INPUT_EDITTING_TASK:
+      const edittingTasks = state.editTasks.slice();
+      edittingTasks[action.payload.taskId] = {
+        ...edittingTasks[action.payload.taskId],
+        name: action.payload.task,
+      };
+      return {
+        ...state,
+        editTasks: edittingTasks,
+      }
+    case EDIT_TASK:
+      const edittedTasks = state.editTasks.slice();
+      edittedTasks[action.payload.taskId].name = state.editTasks[action.payload.taskId].name;
+      edittedTasks[action.payload.taskId].deadLine = state.editTasks[action.payload.taskId].deadLine;
+      return {
+        ...state,
+        tasks: edittedTasks,
       }
     default:
       return state;
