@@ -1,4 +1,4 @@
-import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE } from '../constants/Task'
+import { INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE } from '../constants/Task'
 
 // タスク名入力時のアクション、入力中タスク名が渡される
 export function inputTask(task) {
@@ -39,6 +39,16 @@ export function selectTaskType(printTask) {
     type: SELECT_TASKTYPE,
     payload: {
       printTask,
+    }
+  }
+}
+
+// タスク締め切り選択時のアクション、表示する日付が渡される
+export function selectDeadLine(date) {
+  return {
+    type: SELECT_DATE,
+    payload: {
+      deadLine: date,
     }
   }
 }
