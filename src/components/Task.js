@@ -5,6 +5,11 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import { ALL, DONE, NOT_DONE } from '../constants/Task';
 
+// Date型からstr型へ変換
+const convertDateToStr = (date) => (
+  `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()}`
+);
+
 export default function TodoApp(props) {
   let { task, tasks, printTask, inputTask, addTask, doneTask, selectTaskType, selectDeadLine } = { ...props };
 
@@ -14,6 +19,7 @@ export default function TodoApp(props) {
   printTasks.sort(function (a, b) {
     return (a.deadLine > b.deadLine ? 1 : -1);
   });
+
   switch (printTask) {
     case DONE:
       printTasks = printTasks.filter(task => ((task.status === DONE)));
@@ -25,13 +31,12 @@ export default function TodoApp(props) {
       break;
   }
 
-  const convertDateToStr = (date) => (
-    `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()}`
-  );
+  let prevItemDate = convertDateToStr(new Date(1990, 1, 1));
 
   return (
     <div>
       <section>
+        タスクの追加<br />
         <input type="text" id="input_task_area" onChange={e => inputTask(e.target.value)} />
         <DatePicker
           dateFormat="yyyy/MM/dd"
@@ -42,21 +47,35 @@ export default function TodoApp(props) {
       </section>
 
       <section>
+        タスクの絞り込み<br />
         <input type="button" onClick={() => selectTaskType(ALL)} value="全て" />
         <input type="button" onClick={() => selectTaskType(NOT_DONE)} value="未完了" />
         <input type="button" onClick={() => selectTaskType(DONE)} value="完了" />
       </section>
 
       <section>
+        タスクの表示<br />
         <ul>
           {
             printTasks.map((item) => {
+              // 期限単位で表示をまとめる
+              let dateDOM = <span></span>;
+              const itemDate = convertDateToStr(item.deadLine);
+              if (itemDate !== prevItemDate) {
+                dateDOM = <span>{itemDate}</span>;
+                prevItemDate = itemDate;
+              }
+
               return (
-                <li key={item.id}>
-                  <span>{item.name}</span>
-                  <span>{convertDateToStr(item.deadLine)}</span>
-                  <input type="button" onClick={() => doneTask(item.id)} value={item.status} />
-                </li>
+                <div key={item.id}>
+                  {dateDOM}
+                  <li>
+                    <div>
+                      <span>{item.name}</span>
+                      <input type="button" onClick={() => doneTask(item.id)} value={item.status} />
+                    </div>
+                  </li>
+                </div>
               );
             })
           }
