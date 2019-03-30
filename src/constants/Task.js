@@ -13,4 +13,5 @@ export const SELECT_DATE = "SELECT_DATE";
 export const DELETE_TASK = "DELETE_TASK";
 export const EDIT_MODE = "EDIT_MODE";
 export const INPUT_EDITTING_TASK = "INPUT_EDITTING_TASK";
+export const EDIT_DATE = "EDIT_DATE";
 export const EDIT_TASK = "EDIT_TASK";

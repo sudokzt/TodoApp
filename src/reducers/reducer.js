@@ -1,7 +1,7 @@
 import {
   ALL, DONE, NOT_DONE,
   NORMAL, EDIT,
-  ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK
+  ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK, EDIT_DATE
 } from '../constants/Task';
 
 const initialState = {
@@ -90,9 +90,21 @@ export default function Reducer(state = initialState, action) {
         ...state,
         editTasks: edittingTasks,
       }
+    case EDIT_DATE:
+      const edittingDateTasks = state.editTasks.slice();
+      let activeTaskId = Number(document.activeElement.className[0]); // classからカレンダーフォームidを取得
+      edittingDateTasks[activeTaskId] = {
+        ...edittingDateTasks[activeTaskId],
+        deadLine: action.payload.deadLine,
+      };
+      return {
+        ...state,
+        editTasks: edittingDateTasks,
+      }
     case EDIT_TASK:
-      const edittedTasks = state.editTasks.slice();
-      edittedTasks[action.payload.taskId].name = state.editTasks[action.payload.taskId].name;
+      const edittedTasks = state.tasks.slice();
+      edittedTasks.find(v => v.id === action.payload.taskId).name =
+        state.editTasks.find(v => v.id === action.payload.taskId).name; // taskIdが一致したタスクの名前を更新
       edittedTasks[action.payload.taskId].deadLine = state.editTasks[action.payload.taskId].deadLine;
       return {
         ...state,
