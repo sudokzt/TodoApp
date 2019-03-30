@@ -7,11 +7,13 @@ import * as Actions from '../actions/Task';
 /**
  * store内のstateから特定のものだけをpropsに渡す
  */
-function mapStateToProps({ task, tasks, printTask }) {
+function mapStateToProps({ task, tasks, editTasks, printTask, mode }) {
   return {
     task,
     tasks,
+    editTasks,
     printTask,
+    mode,
   };
 }
 
