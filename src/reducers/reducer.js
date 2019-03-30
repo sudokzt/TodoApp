@@ -1,11 +1,13 @@
 import {
   ALL, DONE, NOT_DONE,
   NORMAL, EDIT,
-  ADD_TASK, INPUT_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE, DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK, EDIT_DATE
+  INPUT_TASK, ADD_TASK, DONE_TASK, SELECT_TASKTYPE, SELECT_DATE,
+  DELETE_TASK, EDIT_MODE, INPUT_EDITTING_TASK, EDIT_TASK, EDIT_DATE
 } from '../constants/Task';
 
 const initialState = {
   task: {
+    id: 0,
     name: '',
     status: '',
     deadLine: new Date(),
@@ -17,21 +19,22 @@ const initialState = {
 };
 
 export default function Reducer(state = initialState, action) {
-  const task = state.task;
-  switch (action.type) {
+  const { task, tasks, mode, editTasks } = state;
+  const { type, payload } = action;
+  switch (type) {
     case INPUT_TASK:
       return {
         ...state,
         task: {
           ...task,
-          name: action.payload.task,
+          name: payload.task,
         }
       }
     case ADD_TASK:
       const newTask = {
-        id: state.tasks.length,
-        name: action.payload.task,
-        deadLine: state.task.deadLine,
+        id: tasks.length,
+        name: payload.task,
+        deadLine: task.deadLine,
         status: NOT_DONE,
       };
       return {
@@ -41,11 +44,11 @@ export default function Reducer(state = initialState, action) {
           status: '',
           deadLine: new Date(),
         },
-        tasks: state.tasks.concat([newTask]),
+        tasks: tasks.concat([newTask]),
       }
     case DONE_TASK:
-      const doneTaskIndex = action.payload.taskId;
-      const updateTasks = state.tasks.slice(); // 配列コピー
+      const doneTaskIndex = payload.taskId;
+      const updateTasks = tasks.slice(); // 配列コピー
       updateTasks[doneTaskIndex].status = (updateTasks[doneTaskIndex].status === DONE) ? NOT_DONE : DONE; // ステータストグル
       return {
         ...state,
@@ -54,19 +57,19 @@ export default function Reducer(state = initialState, action) {
     case SELECT_TASKTYPE:
       return {
         ...state,
-        printTask: action.payload.printTask,
+        printTask: payload.printTask,
       };
     case SELECT_DATE:
       return {
         ...state,
         task: {
           ...task,
-          deadLine: action.payload.deadLine,
+          deadLine: payload.deadLine,
         }
       };
     case DELETE_TASK:
-      const deleteTaskIndex = action.payload.taskId;
-      const deletedTasks = state.tasks.slice(); // 配列コピー
+      const deleteTaskIndex = payload.taskId;
+      const deletedTasks = tasks.slice(); // 配列コピー
       deletedTasks.splice(deleteTaskIndex, 1); // 要素削除
       deletedTasks.forEach(v => { if (v.id > deleteTaskIndex) v.id-- }); // 削除した以降のタスクのidを-1する
       return {
@@ -77,35 +80,35 @@ export default function Reducer(state = initialState, action) {
     case EDIT_MODE:
       return {
         ...state,
-        mode: (state.mode === EDIT) ? NORMAL : EDIT,
-        editTasks: state.tasks.slice() // 編集モード時に変更したタスクを保存するための配列
+        mode: (mode === EDIT) ? NORMAL : EDIT,
+        editTasks: tasks.slice() // 編集モード時に変更したタスクを保存するための配列
       };
     case INPUT_EDITTING_TASK:
-      const edittingTasks = state.editTasks.slice();
-      edittingTasks[action.payload.taskId] = {
-        ...edittingTasks[action.payload.taskId],
-        name: action.payload.task,
+      const edittingTasks = editTasks.slice();
+      edittingTasks[payload.taskId] = {
+        ...edittingTasks[payload.taskId],
+        name: payload.task,
       };
       return {
         ...state,
         editTasks: edittingTasks,
       }
     case EDIT_DATE:
-      const edittingDateTasks = state.editTasks.slice();
+      const edittingDateTasks = editTasks.slice();
       let activeTaskId = Number(document.activeElement.className[0]); // classからカレンダーフォームidを取得
       edittingDateTasks[activeTaskId] = {
         ...edittingDateTasks[activeTaskId],
-        deadLine: action.payload.deadLine,
+        deadLine: payload.deadLine,
       };
       return {
         ...state,
         editTasks: edittingDateTasks,
       }
     case EDIT_TASK:
-      const edittedTasks = state.tasks.slice();
-      edittedTasks.find(v => v.id === action.payload.taskId).name =
-        state.editTasks.find(v => v.id === action.payload.taskId).name; // taskIdが一致したタスクの名前を更新
-      edittedTasks[action.payload.taskId].deadLine = state.editTasks[action.payload.taskId].deadLine;
+      const edittedTasks = tasks.slice();
+      edittedTasks.find(v => v.id === payload.taskId).name =
+        editTasks.find(v => v.id === payload.taskId).name; // taskIdが一致したタスクの名前を更新
+      edittedTasks[payload.taskId].deadLine = editTasks[payload.taskId].deadLine;
       return {
         ...state,
         tasks: edittedTasks,

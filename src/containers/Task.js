@@ -24,20 +24,6 @@ function mapDispatchToProps(dispatch) {
   return (
     bindActionCreators(Actions, dispatch)
   );
-  // return {
-  //   addTask(task) {
-  //     dispatch(addTask(task));
-  //   },
-  //   inputTask(task) {
-  //     dispatch(inputTask(task));
-  //   },
-  //   doneTask(taskId) {
-  //     dispatch(doneTask(taskId));
-  //   },
-  //   selectTaskType(printTask) {
-  //     dispatch(selectTaskType(printTask));
-  //   }
-  // }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task);
