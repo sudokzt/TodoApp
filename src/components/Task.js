@@ -1,24 +1,44 @@
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import PropTypes from 'prop-types';
+import React from "react";
+import DatePicker from "react-datepicker";
+import PropTypes from "prop-types";
 
+import "../css/task.css";
 // date-pickerのcss
 import "react-datepicker/dist/react-datepicker.css";
 
-import {
-  ALL, DONE, NOT_DONE,
-  NORMAL, EDIT
-} from '../constants/Task';
+import Reboot from "material-ui/Reboot";
+import AppBar from "material-ui/AppBar";
+import ToolBar from "material-ui/Toolbar";
+import Typography from "material-ui/Typography";
+import Button from "material-ui/Button";
+import Input from "material-ui/Input";
+
+import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
 
 // Date型からstr型へ変換する関数
-const convertDateToStr = (date) => (
-  `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()}`
-);
+const convertDateToStr = date =>
+  `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 
 export default function TodoApp(props) {
-  let { task, tasks, editTasks, printTask, mode, inputTask, addTask, doneTask, deleteTask, selectTaskType, selectDeadLine, editMode, inputEditingTask, editTask, editDeadLine } = { ...props };
+  let {
+    task,
+    tasks,
+    editTasks,
+    printTask,
+    mode,
+    inputTask,
+    addTask,
+    doneTask,
+    deleteTask,
+    selectTaskType,
+    selectDeadLine,
+    editMode,
+    inputEditingTask,
+    editTask,
+    editDeadLine
+  } = { ...props };
 
-  const toggleMode = (mode === NORMAL ? EDIT : NORMAL); // 「モード変更ボタンには」現在のモードと逆のものを表示するため
+  const toggleMode = mode === NORMAL ? EDIT : NORMAL; // 「モード変更ボタンには」現在のモードと逆のものを表示するため
 
   /*************************************************************************************************************/
   // 表示するタスク一覧に絞り込み
@@ -29,15 +49,15 @@ export default function TodoApp(props) {
     printTasks = editTasks.slice();
   }
   // ソート
-  printTasks.sort(function (a, b) {
-    return (a.deadLine > b.deadLine ? 1 : -1);
+  printTasks.sort(function(a, b) {
+    return a.deadLine > b.deadLine ? 1 : -1;
   });
   switch (printTask) {
     case DONE:
-      printTasks = printTasks.filter(task => ((task.status === DONE)));
+      printTasks = printTasks.filter(task => task.status === DONE);
       break;
     case NOT_DONE:
-      printTasks = printTasks.filter(task => ((task.status === NOT_DONE)));
+      printTasks = printTasks.filter(task => task.status === NOT_DONE);
       break;
     default:
       break;
@@ -50,94 +70,159 @@ export default function TodoApp(props) {
 
   return (
     <div>
-      <section>
-        モード選択
-        <input type="button" onClick={() => editMode()} value={toggleMode} />
+      <Reboot />
+      <AppBar position="static">
+        <ToolBar>
+          <Typography type="title" color="inherit">
+            TodoApp
+          </Typography>
+        </ToolBar>
+      </AppBar>
+
+      <section className="mode">
+        <span className="section-title">モード選択</span>
+        <Button
+          raised
+          color="primary"
+          onClick={() => editMode()}
+          className="button"
+        >
+          {toggleMode}
+        </Button>
       </section>
 
-      {
-        (() => {
-          /* 通常モード */
-          if (mode === NORMAL) {
-            return (<section>
-              タスクの追加<br />
-              <input type="text" id="input_task_area" onChange={e => inputTask(e.target.value)} />
+      {(() => {
+        /* 通常モード */
+        if (mode === NORMAL) {
+          return (
+            <section className="add-task">
+              <div className="section-title">タスクの追加</div>
+              <Input
+                id="input_task_area"
+                onChange={e => inputTask(e.target.value)}
+              />
               <DatePicker
                 dateFormat="yyyy/MM/dd"
                 selected={task.deadLine}
                 onChange={selectDeadLine}
+                className="input-date"
               />
-              <input type="button" onClick={() => addTask(task.name)} value="追加" />
+              <Button
+                raised
+                color="primary"
+                onClick={() => addTask(task.name)}
+                className="button"
+              >
+                追加
+              </Button>
             </section>
-            )
-          }
-        })()
-      }
+          );
+        }
+      })()}
 
-      <section>
-        タスクの絞り込み<br />
-        <input type="button" onClick={() => selectTaskType(ALL)} value={ALL} />
-        <input type="button" onClick={() => selectTaskType(NOT_DONE)} value={NOT_DONE} />
-        <input type="button" onClick={() => selectTaskType(DONE)} value={DONE} />
+      <section className="filter-tasks">
+        <div className="section-title">タスクの絞り込み</div>
+        <Button raised color="primary" onClick={() => selectTaskType(ALL)}>
+          {ALL}
+        </Button>
+        <Button
+          raised
+          color="primary"
+          onClick={() => selectTaskType(NOT_DONE)}
+          className="button"
+        >
+          {NOT_DONE}
+        </Button>
+        <Button
+          raised
+          color="primary"
+          onClick={() => selectTaskType(DONE)}
+          className="button"
+        >
+          {DONE}
+        </Button>
       </section>
 
-      <section>
-        タスクの表示<br />
-        <ul>
-          {
-            printTasks.map((item) => {
-              // 期限単位で表示をまとめる
-              let dateDOM = <span></span>;
-              const itemDate = convertDateToStr(item.deadLine);
-              if (itemDate !== prevItemDate) {
-                dateDOM = <span>{itemDate}</span>;
-                prevItemDate = itemDate;
-              }
-
-              return (
-                <div key={item.id}>
-                  {dateDOM}
-                  <li>
-                    {
-                      (() => {
-                        // モードによって返すDOMを変更
-                        /* 通常モード */
-                        if (mode === NORMAL) {
-                          return (
-                            <div>
-                              <span>{item.name}</span>
-                              <input type="button" onClick={() => doneTask(item.id)} value={item.status} />
-                            </div>
-                          )
-                        }
-                        /* 編集モード */
-                        else {
-                          return (
-                            <div>
-                              <input type="text" value={item.name} onChange={e => inputEditingTask(e.target.value, item.id)} />
-                              <DatePicker
-                                dateFormat="yyyy/MM/dd"
-                                selected={item.deadLine}
-                                onChange={editDeadLine}
-                                className={String(item.id)}
-                              />
-                              <input type="button" onClick={() => editTask(item.id)} value="更新" />
-                              <input type="button" onClick={() => deleteTask(item.id)} value="削除" />
-                            </div>
-                          );
-                        }
-                      })()
-                    }
-                  </li>
+      <section className="print-tasks">
+        <ul className="tasks-list">
+          {printTasks.map(item => {
+            // 期限単位で表示をまとめる
+            let dateDOM = <span />;
+            const itemDate = convertDateToStr(item.deadLine);
+            if (itemDate !== prevItemDate) {
+              dateDOM = (
+                <div className="task-date">
+                  <spna className="task-date-text">{itemDate}</spna>
                 </div>
               );
-            })
-          }
+              prevItemDate = itemDate;
+            }
+
+            return (
+              <div key={item.id}>
+                {dateDOM}
+                <li className="task-item">
+                  {(() => {
+                    // モードによって返すDOMを変更
+                    /* 通常モード */
+                    if (mode === NORMAL) {
+                      return (
+                        <div>
+                          <span className="task-name">{item.name}</span>
+                          <Button
+                            raised
+                            onClick={() => doneTask(item.id)}
+                            className="button"
+                          >
+                            {item.status}
+                          </Button>
+                        </div>
+                      );
+                    } else {
+                      /* 編集モード */
+                      return (
+                        <div>
+                          <Input
+                            value={item.name}
+                            onChange={e =>
+                              inputEditingTask(e.target.value, item.id)
+                            }
+                          />
+                          <DatePicker
+                            dateFormat="yyyy/MM/dd"
+                            selected={item.deadLine}
+                            onChange={editDeadLine}
+                            className={[String(item.id), "input-date"]}
+                          />
+                          <Button
+                            raised
+                            color=""
+                            onClick={() => editTask(item.id)}
+                            className="button"
+                          >
+                            更新
+                          </Button>
+                          <Button
+                            raised
+                            color="secondary"
+                            onClick={() => deleteTask(item.id)}
+                            className="button"
+                          >
+                            削除
+                          </Button>
+                        </div>
+                      );
+                    }
+                  })()}
+                </li>
+              </div>
+            );
+          })}
         </ul>
       </section>
     </div>
-  )
-};
+  );
+}
 
 // 型指定
 TodoApp.propTypes = {
@@ -155,5 +240,5 @@ TodoApp.propTypes = {
   editMode: PropTypes.func.isRequired,
   inputEditingTask: PropTypes.func.isRequired,
   editTask: PropTypes.func.isRequired,
-  editDeadLine: PropTypes.func.isRequired,
-}
+  editDeadLine: PropTypes.func.isRequired
+};
