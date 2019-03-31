@@ -87,7 +87,7 @@ export default function TodoApp(props) {
           onClick={() => editMode()}
           className="button"
         >
-          {toggleMode}
+          {toggleMode}モードへ
         </Button>
       </section>
 
