@@ -1,68 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Todo アプリ
 
-## Available Scripts
+これは React を用いて作った Todo アプリです。
 
-In the project directory, you can run:
+## 目次
 
-### `npm start`
+- [セットアップ方法](#セットアップ方法)
+- [搭載機能](#搭載機能)
+- [搭載機能作成理由](#搭載機能作成理由)
+- [補足](#補足)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## <a id="セットアップ方法">セットアップ方法</a>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+このアプリケーションにはボイラーとして [Create React App](https://github.com/facebook/create-react-app) を用いました。
+このプロジェクトにおいては、以下のコマンドでローカルサーバーがたちがあります。
 
-### `npm test`
+### `npm start` or `yarn start`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+開かない場合は [Open](http://localhost:3000) をクリックしてください。
 
-### `npm run build`
+## <a id="搭載機能">搭載機能</a>
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. タスクを期日順に一覧表示する機能
+2. タスクを追加する機能
+3. タスクを完了する機能
+4. タスクを全て/未完了/完了でフィルタリングする機能
+5. タスク追加時に期日を設定する機能
+6. タスクの名前と期日を編集する機能
+7. タスクを削除する機能
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## <a id="搭載機能作成理由">搭載機能作成理由</a>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ① 期日機能を実装した理由
 
-### `npm run eject`
+3 つの理由があります。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<pre>
+1つ目が、「いつまでにやるべきタスクなのか」というゴール設定がなかったら実用性に欠けてしまうから。
+2つ目が、タスクを一覧表示した時に、日付ごとに分かれていたら"するべき"タスクの多さに落胆しない気がしたから。
+3つ目が、期日があれば通知機能や補足①で述べる本当に作りたかった機能など、拡張がしやすいと思ったから。
+</pre>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+です。
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### ②CRUD を実装した理由
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<pre>
+自分自身が編集モード昨日(編集・削除)がないTodoアプリは使いたくないと思ったし、ユーザーにも使ってもらいたくないから。
+</pre>
 
-## Learn More
+です。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## <a id="補足">補足</a>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ①Tweet 機能
 
-### Code Splitting
+(本来やりたかったこと)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### ②ReactHooks について
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+SFC で(React,Redux)で実装をしました。
+master-2 ブランチにて FC(react hooks)で実装をしたいと思います。
+まだまだ、Redux と react hooks における経験が少ないのでしっかりと勉強をします！
