@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import Task from '../components/Task';
-import * as Actions from '../actions/Task';
+import Task from "../components/Task";
+import * as Actions from "../actions/Task";
 
 function mapStateToProps({ task, tasks, editTasks, printTask, mode }) {
   return {
@@ -10,14 +10,15 @@ function mapStateToProps({ task, tasks, editTasks, printTask, mode }) {
     tasks,
     editTasks,
     printTask,
-    mode,
+    mode
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return (
-    bindActionCreators(Actions, dispatch)
-  );
-};
+  return bindActionCreators(Actions, dispatch);
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Task);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Task);
