@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 
 import './index.css';
 import Task from './containers/Task';
@@ -9,7 +10,8 @@ import Task from './containers/Task';
 import Reducer from './reducers/reducer';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore(Reducer);
+// ログ表示
+const store = createStore(Reducer, applyMiddleware(logger));
 
 ReactDOM.render(
   <Provider store={store}>

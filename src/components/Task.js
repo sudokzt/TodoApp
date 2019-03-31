@@ -1,6 +1,8 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
+import PropTypes from 'prop-types';
 
+// date-pickerのcss
 import "react-datepicker/dist/react-datepicker.css";
 
 import {
@@ -136,3 +138,22 @@ export default function TodoApp(props) {
     </div>
   )
 };
+
+// 型指定
+TodoApp.propTypes = {
+  task: PropTypes.object.isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  editTasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  printTask: PropTypes.string.isRequired,
+  mode: PropTypes.string.isRequired,
+  inputTask: PropTypes.func.isRequired,
+  addTask: PropTypes.func.isRequired,
+  doneTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  selectTaskType: PropTypes.func.isRequired,
+  selectDeadLine: PropTypes.func.isRequired,
+  editMode: PropTypes.func.isRequired,
+  inputEditingTask: PropTypes.func.isRequired,
+  editTask: PropTypes.func.isRequired,
+  editDeadLine: PropTypes.func.isRequired,
+}
