@@ -58,6 +58,6 @@
 
 ### ②ReactHooks について
 
-SFC で(React,Redux)で実装をしました。
-master-2 ブランチにて FC(react hooks)で実装をしたいと思います。
+masterブランチではSFC で(React,Redux)で実装をしました。
+attempt-react-hooksブランチでは FC(ReactHooks)で実装をしました。
 まだまだ、Redux と react hooks における経験が少ないのでしっかりと勉強をします！
