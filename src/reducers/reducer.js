@@ -16,7 +16,7 @@ import {
   EDIT_DATE
 } from "../constants/Task";
 
-const initialState = {
+export const initialState = {
   task: {
     id: 0,
     name: "",
@@ -29,7 +29,7 @@ const initialState = {
   mode: NORMAL
 };
 
-export default function Reducer(state = initialState, action) {
+export default function reducer(state, action) {
   const { task, tasks, mode, editTasks } = state;
   const { type, payload } = action;
   switch (type) {
