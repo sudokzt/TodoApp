@@ -101,7 +101,8 @@ export default function Reducer(state = initialState, action) {
       const edittingTasks = editTasks.slice();
       edittingTasks[payload.taskId] = {
         ...edittingTasks[payload.taskId],
-        name: payload.task
+        name: payload.task,
+        editting: true
       };
       return {
         ...state,
@@ -112,7 +113,8 @@ export default function Reducer(state = initialState, action) {
       let activeTaskId = Number(document.activeElement.className[0]); // classからカレンダーフォームidを取得
       edittingDateTasks[activeTaskId] = {
         ...edittingDateTasks[activeTaskId],
-        deadLine: payload.deadLine
+        deadLine: payload.deadLine,
+        editting: true
       };
       return {
         ...state,
@@ -125,9 +127,11 @@ export default function Reducer(state = initialState, action) {
       ).name; // taskIdが一致したタスクの名前を更新
       edittedTasks[payload.taskId].deadLine =
         editTasks[payload.taskId].deadLine;
+      editTasks[payload.taskId].editting = false;
       return {
         ...state,
-        tasks: edittedTasks
+        tasks: edittedTasks,
+        editTasks
       };
     default:
       return state;

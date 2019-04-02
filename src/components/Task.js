@@ -196,6 +196,16 @@ export default function TodoApp(props) {
                           >
                             削除
                           </Button>
+                          {(() => {
+                            if (item.editting === true) {
+                              return (
+                                <span className="editting-message">
+                                  <i class="fas fa-exclamation-triangle warnning" />
+                                  変更が保存されていません
+                                </span>
+                              );
+                            }
+                          })()}
                         </div>
                       );
                     }
