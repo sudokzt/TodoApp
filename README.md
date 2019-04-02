@@ -15,11 +15,12 @@
 ## <a id="セットアップ方法">セットアップ方法</a>
 
 このアプリケーションにはボイラーとして [Create React App](https://github.com/facebook/create-react-app) を用いました。
-このプロジェクトにおいては、以下のコマンドでローカルサーバーが立ちあがあります。
+このプロジェクトは、git cloneをした後で、以下のコマンドを入力することnode_modulesを配置してローカルサーバーが立ちあがあります。
 
+### `npm install`	or `yarn install`
 ### `npm start` or `yarn start`
 
-開かない場合は [Open](http://localhost:3000) をクリックしてください。
+開かない場合は http://localhost:3000　（デフォルトのportは3000番,他のlocalhostを開いている場合は、URLをターミナルに書いてある番号に変えてください） をクリックしてください。
 
 ## <a id="搭載機能">搭載機能</a>
 
