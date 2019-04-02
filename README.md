@@ -12,7 +12,7 @@
 ## <a id="セットアップ方法">セットアップ方法</a>
 
 このアプリケーションにはボイラーとして [Create React App](https://github.com/facebook/create-react-app) を用いました。
-このプロジェクトにおいては、以下のコマンドでローカルサーバーがたちがあります。
+このプロジェクトにおいては、以下のコマンドでローカルサーバーが立ちあがあります。
 
 ### `npm start` or `yarn start`
 
