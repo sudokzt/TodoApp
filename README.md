@@ -2,8 +2,8 @@
 
 これは React を用いて作った Todo アプリです。
 
-1. masterブランチではSFC で(React,Redux)で実装をしました。
-2. attempt-react-hooksブランチでは FC(ReactHooks)で実装をしました。（Issuesに書いた警告機能に関してはhooksでは実装していません。）
+1. masterブランチではReact,Reduxで実装をしました。
+2. attempt-react-hooksブランチでは ReactHooksで実装をしました。（Issuesに書いた警告機能に関してはhooksでは実装していません。）
 
 ## 目次
 
@@ -67,6 +67,6 @@
 
 ### ②ReactHooks について
 
-masterブランチではSFC で(React,Redux)で実装をしました。<br>
-attempt-react-hooksブランチでは FC(ReactHooks)で実装をしました。<br>
-まだまだ、Redux と react hooks における経験が少ないのでしっかりと勉強をします！<br>
+masterブランチではReact,Reduxで実装をしました。<br>
+attempt-react-hooksブランチでは ReactHooksで実装をしました。<br>
+まだまだ、Redux と ReactHooks における経験が少ないのでしっかりと勉強をします！<br>
