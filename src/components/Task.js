@@ -139,7 +139,7 @@ export default function TodoApp(props) {
             if (itemDate !== prevItemDate) {
               dateDOM = (
                 <div className="task-date">
-                  <spna className="task-date-text">{itemDate}</spna>
+                  <span className="task-date-text">{itemDate}</span>
                 </div>
               );
               prevItemDate = itemDate;
@@ -179,11 +179,10 @@ export default function TodoApp(props) {
                             dateFormat="yyyy/MM/dd"
                             selected={item.deadLine}
                             onChange={editDeadLine}
-                            className={[String(item.id), "input-date"]}
+                            className={String(item.id) + " " + "input-date"}
                           />
                           <Button
                             raised
-                            color=""
                             onClick={() => editTask(item.id)}
                             className="button"
                           >
