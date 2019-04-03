@@ -71,3 +71,5 @@
 masterブランチではReact,Reduxで実装をしました。<br>
 attempt-react-hooksブランチでは ReactHooksで実装をしました。<br>
 まだまだ、Redux と ReactHooks における経験が少ないのでしっかりと勉強をします！<br>
+
+localStorageを使って、タスクの状態を保存するようにしました。誤動作はないと思いますが、あった場合、localStorage.clear(); をブラウザにて打っていただけたらありがたいです！
