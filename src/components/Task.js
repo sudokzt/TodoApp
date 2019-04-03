@@ -13,8 +13,11 @@ import Header from "../containers/Header";
 import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
 
 // Date型からstr型へ変換する関数
-const convertDateToStr = date =>
-  `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+const convertDateToStr = date => {
+  date = new Date(date);
+  date.setTime(date.getTime() + 1000 * 60 * 60 * 9); // JSTに変換
+  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+};
 
 export default function TodoApp(props) {
   let {
@@ -46,9 +49,10 @@ export default function TodoApp(props) {
     printTasks = editTasks.slice();
   }
   // ソート
-  printTasks.sort(function(a, b) {
-    return a.deadLine > b.deadLine ? 1 : -1;
+  printTasks.sort((a, b) => {
+    return new Date(a.deadLine) > new Date(b.deadLine) ? 1 : -1;
   });
+
   switch (printTask) {
     case DONE:
       printTasks = printTasks.filter(task => task.status === DONE);
@@ -62,7 +66,7 @@ export default function TodoApp(props) {
 
   /*************************************************************************************************************/
 
-  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておく
+  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておくz
   let prevItemDate = convertDateToStr(new Date(1990, 1, 1));
 
   return (
@@ -92,7 +96,7 @@ export default function TodoApp(props) {
               />
               <DatePicker
                 dateFormat="yyyy/MM/dd"
-                selected={task.deadLine}
+                selected={new Date(task.deadLine)}
                 onChange={selectDeadLine}
                 className="input-date"
               />
@@ -110,23 +114,17 @@ export default function TodoApp(props) {
       })()}
       <section className="filter-tasks">
         <div className="section-title">タスクの絞り込み</div>
-        <Button raised color="primary" onClick={() => selectTaskType(ALL)}>
+        <Button raised onClick={() => selectTaskType(ALL)}>
           {ALL}
         </Button>
         <Button
           raised
-          color="primary"
           onClick={() => selectTaskType(NOT_DONE)}
           className="button"
         >
           {NOT_DONE}
         </Button>
-        <Button
-          raised
-          color="primary"
-          onClick={() => selectTaskType(DONE)}
-          className="button"
-        >
+        <Button raised onClick={() => selectTaskType(DONE)} className="button">
           {DONE}
         </Button>
       </section>
@@ -177,9 +175,9 @@ export default function TodoApp(props) {
                           />
                           <DatePicker
                             dateFormat="yyyy/MM/dd"
-                            selected={item.deadLine}
+                            selected={new Date(item.deadLine)}
                             onChange={editDeadLine}
-                            className={String(item.id) + " " + "input-date"}
+                            className={`${String(item.id)} input-date`}
                           />
                           <Button
                             raised
@@ -200,7 +198,7 @@ export default function TodoApp(props) {
                             if (item.editting === true) {
                               return (
                                 <span className="editting-message">
-                                  <i class="fas fa-exclamation-triangle warnning" />
+                                  <i className="fas fa-exclamation-triangle warnning" />
                                   変更が保存されていません
                                 </span>
                               );
