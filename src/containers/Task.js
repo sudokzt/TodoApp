@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Task from "../components/Task";
-import * as Actions from "../actions/Task";
+import * as Actions from "../actions/task";
 
 function mapStateToProps({ task, tasks, editTasks, printTask, mode }) {
   return {
@@ -18,7 +18,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
 
-// connect() はカリー化関数
 export default connect(
   mapStateToProps,
   mapDispatchToProps

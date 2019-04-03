@@ -10,7 +10,7 @@ import Button from "material-ui/Button";
 import Input from "material-ui/Input";
 
 import Header from "../containers/Header";
-import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
+import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/task";
 
 // Date型からstr型へ変換する関数
 const convertDateToStr = date => {
@@ -66,7 +66,7 @@ export default function TodoApp(props) {
 
   /*************************************************************************************************************/
 
-  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておくz
+  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておく
   let prevItemDate = convertDateToStr(new Date(1990, 1, 1));
 
   return (
