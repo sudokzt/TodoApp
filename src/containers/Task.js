@@ -18,6 +18,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
 
+// connect() はカリー化関数
 export default connect(
   mapStateToProps,
   mapDispatchToProps

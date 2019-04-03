@@ -29,7 +29,7 @@ const initialState = {
   mode: NORMAL
 };
 
-export default function Reducer(state = initialState, action) {
+export default function reducer(state = initialState, action) {
   const { task, tasks, mode, editTasks } = state;
   const { type, payload } = action;
   switch (type) {
