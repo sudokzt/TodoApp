@@ -1,5 +1,5 @@
 import { createStore as reducerCreateStore, applyMiddleware } from "redux";
-import logger from "redux-logger"; // デバッグ時に使う
+// import logger from "redux-logger"; // デバッグ時に使う
 
 import reducer from "../reducers/reducer";
 
@@ -16,6 +16,6 @@ export default function createStore() {
   return reducerCreateStore(
     reducer,
     savedState ? savedState : reducer(undefined, { type: "INIT" }),
-    applyMiddleware(storageMiddleware, logger)
+    applyMiddleware(storageMiddleware)
   );
 }
