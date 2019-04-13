@@ -39,7 +39,6 @@ export default function TodoApp(props) {
   } = { ...props };
 
   const toggleMode = mode === NORMAL ? EDIT : NORMAL; // 「モード変更ボタンには」現在のモードと逆のものを表示するため
-
   /*************************************************************************************************************/
   // 表示するタスク一覧に絞り込み
   let printTasks;
