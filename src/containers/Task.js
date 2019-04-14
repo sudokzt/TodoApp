@@ -4,7 +4,8 @@ import { bindActionCreators } from "redux";
 import Task from "../components/Task";
 import * as Actions from "../actions/task";
 
-function mapStateToProps({ task, tasks, editTasks, printTask, mode }) {
+function mapStateToProps(state) {
+  const { task, tasks, editTasks, printTask, mode } = state.task;
   return {
     task,
     tasks,
