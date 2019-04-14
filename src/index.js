@@ -4,8 +4,9 @@ import { Provider } from "react-redux";
 
 import "./index.css";
 import Task from "./containers/Task";
-import LoginButton from "./components/Login";
+import LoginButton from "./containers/Auth";
 import createStore from "./store";
+import "./config";
 
 import * as serviceWorker from "./serviceWorker";
 

@@ -20,6 +20,7 @@ const convertDateToStr = date => {
 };
 
 export default function TodoApp(props) {
+  console.log(props);
   let {
     task,
     tasks,
