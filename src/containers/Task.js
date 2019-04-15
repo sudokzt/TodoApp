@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import Task from "../components/Task";
-import * as Actions from "../actions/task";
+import * as Actions from "../actions/Task";
 
 function mapStateToProps(state) {
   const { task, tasks, editTasks, printTask, mode } = state.task;
