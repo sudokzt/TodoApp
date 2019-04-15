@@ -14,7 +14,7 @@ import {
   INPUT_EDITTING_TASK,
   EDIT_TASK,
   EDIT_DATE
-} from "../constants/task";
+} from "../constants/Task";
 
 const initialState = {
   task: {

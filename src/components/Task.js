@@ -10,7 +10,7 @@ import Button from "material-ui/Button";
 import Input from "material-ui/Input";
 
 import Header from "../containers/Header";
-import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/task";
+import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
 
 // Date型からstr型へ変換する関数
 const convertDateToStr = date => {

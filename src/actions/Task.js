@@ -9,7 +9,7 @@ import {
   INPUT_EDITTING_TASK,
   EDIT_DATE,
   EDIT_TASK
-} from "../constants/task";
+} from "../constants/Task";
 
 // タスク名入力時のアクション、入力中タスク名が渡される
 export function inputTask(task) {
