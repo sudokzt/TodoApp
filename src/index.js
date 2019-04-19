@@ -6,7 +6,7 @@ import "./index.css";
 import Task from "./containers/Task";
 import LoginButton from "./containers/Auth";
 import createStore from "./store";
-import "./config";
+import "./firebase/config";
 
 import * as serviceWorker from "./serviceWorker";
 

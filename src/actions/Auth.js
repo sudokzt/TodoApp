@@ -1,6 +1,6 @@
 import { LOGIN, LOGOUT } from "../constants/Auth";
 
-import firebase from "../config";
+import firebase from "../firebase";
 
 const loginResult = async () => {
   // リダイレクトした時の結果を取得

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 
-import firebase, { providerTwitter } from "../config";
+import firebase, { providerTwitter } from "../firebase/";
 
-const TWITTER_CUTOMER_SECRET_KEY = process.env.TWITTER_CUTOMER_SECRET_KEY;
-const TWITTER_CUSTOMER_KEY = process.env.TWITTER_CUSTOMER_KEY;
+// twitter API APPの各キーを取得
+const REACT_APP_TWITTER_CUTOMER_SECRET_KEY =
+  process.env.REACT_APP_TWITTER_CUTOMER_SECRET_KEY;
+const REACT_APP_TWITTER_CUSTOMER_KEY =
+  process.env.REACT_APP_TWITTER_CUSTOMER_KEY;
 
 // ログインハンドラー
 const handleLoginButton = () => {
@@ -56,12 +59,10 @@ export default class LoginButton extends Component {
             const twitter = require("twitter");
 
             const test = {
-              consumer_key: TWITTER_CUSTOMER_KEY,
-              consumer_secret: TWITTER_CUTOMER_SECRET_KEY,
-              access_token_key:
-                "847735307696955392-lf9IFJ0Kip2tRU4wFmk1ea9ZQQzO6WG",
-              access_token_secret:
-                "caGrSNdemt3C8MF7LFFSqlOe0jBSTVEux3CWNN85nSYl4"
+              consumer_key: REACT_APP_TWITTER_CUSTOMER_KEY,
+              consumer_secret: REACT_APP_TWITTER_CUTOMER_SECRET_KEY,
+              access_token_key: "",
+              access_token_secret: ""
             };
 
             const client = new twitter(test);
