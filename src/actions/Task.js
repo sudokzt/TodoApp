@@ -64,9 +64,11 @@ export function addTask(task, deadLine) {
   let inputTaskArea = document.getElementById("input_task_area");
   inputTaskArea.value = "";
   // 入力タスクをDBに保存
-  return dispatch => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
     ref
       .push({
+        uid,
         task,
         deadLine,
         status: NOT_DONE
