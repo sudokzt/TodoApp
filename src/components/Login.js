@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 import firebase, { providerTwitter } from "../firebase/";
 
-// twitter API APPの各キーを取得
-const REACT_APP_TWITTER_CUTOMER_SECRET_KEY =
-  process.env.REACT_APP_TWITTER_CUTOMER_SECRET_KEY;
-const REACT_APP_TWITTER_CUSTOMER_KEY =
-  process.env.REACT_APP_TWITTER_CUSTOMER_KEY;
+// // twitter API APPの各キーを取得
+// const REACT_APP_TWITTER_CUTOMER_SECRET_KEY =
+//   process.env.REACT_APP_TWITTER_CUTOMER_SECRET_KEY;
+// const REACT_APP_TWITTER_CUSTOMER_KEY =
+//   process.env.REACT_APP_TWITTER_CUSTOMER_KEY;
 
 // ログインハンドラー
 const handleLoginButton = () => {
@@ -27,60 +27,14 @@ export default class LoginButton extends Component {
             ログイン
           </button>
         ) : (
-          <button id="logout-button" onClick={() => this.props.logout()}>
-            ログアウト
-          </button>
+          <section>
+            <img alt="アイコン" src={this.props.photoURL} />
+            <span>{this.props.displayName}</span>
+            <button id="logout-button" onClick={() => this.props.logout()}>
+              ログアウト
+            </button>
+          </section>
         )}
-        <button
-          onClick={() => {
-            firebase
-              .auth()
-              .onAuthStateChanged(user => {
-                let name, email, photoUrl, uid, emailVerified;
-                if (user != null) {
-                  name = user.displayName;
-                  email = user.email;
-                  photoUrl = user.photoURL;
-                  emailVerified = user.emailVerified;
-                  uid = user.uid;
-                  console.log(user);
-                }
-              })
-              .catch(function(error) {
-                // Handle error
-                console.log({ error });
-              });
-          }}
-        >
-          ユーザー確認
-        </button>
-        <button
-          onClick={() => {
-            const twitter = require("twitter");
-
-            const test = {
-              consumer_key: REACT_APP_TWITTER_CUSTOMER_KEY,
-              consumer_secret: REACT_APP_TWITTER_CUTOMER_SECRET_KEY,
-              access_token_key: "",
-              access_token_secret: ""
-            };
-
-            const client = new twitter(test);
-            client.post(
-              `statuses/update`,
-              { status: "ツイートしたい内容" },
-              function(error, tweet, response) {
-                if (!error) {
-                  console.log(tweet);
-                } else {
-                  console.log(error);
-                }
-              }
-            );
-          }}
-        >
-          テスト
-        </button>
       </div>
     );
   }
