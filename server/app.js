@@ -1,19 +1,20 @@
 //app.js
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 let app = express();
-app.use(express.static(path.join(__dirname, "build")));
+// app.use(express.static(path.join(__dirname, "build")));
 const port = process.env.PORT || "8080";
-app.set("port", port);
 
-const router = express.Router();
+// const router = express.Router();
 
-// GET /api/v1/article/test
-router.get("/", (req, res) => {
-  res
-    .render("../index")
-    .listen(port, () => console.log(`Running on localhost:${port}`));
-  res.json({
-    message: "This is article api"
-  });
+/* 2. listen()メソッドを実行して3000番ポートで待ち受け。*/
+const server = app.listen(port, function() {
+  console.log("Node.js is listening to PORT:" + server.address().port);
+});
+
+// 写真リストを取得するAPI
+app.get("/", function(req, res, next) {
+  console.log("test");
+  res.json("aaaaaaaaaaaaaaaaaaa");
+  res.render("../index");
 });
