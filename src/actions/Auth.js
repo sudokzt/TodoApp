@@ -4,11 +4,11 @@ import firebase, { firebaseDb } from "../firebase";
 
 const loginResult = async () => {
   // リダイレクトした時の結果を取得
-  let user = {};
-  await firebase
+  const userInfo = await firebase
     .auth()
     .getRedirectResult()
     .then(result => {
+      let user = {};
       if (result.credential) {
         user["token"] = result.credential.accessToken;
         user["secretKey"] = result.credential.secret;
@@ -30,18 +30,15 @@ const loginResult = async () => {
         secretKey: user.secretKey,
         photoURL: user.photoURL
       });
-      return "ok";
+      return user;
     });
-  return user;
+  return userInfo;
 };
 
 export const loginOk = () => {
   return dispatch => {
     loginResult()
-      .then(user => {
-        // firebase
-        dispatch(login(user));
-      })
+      .then(user => dispatch(login(user)))
       .catch(e => console.log({ e }));
   };
 };
