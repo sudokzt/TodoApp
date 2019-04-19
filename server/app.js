@@ -16,5 +16,5 @@ const server = app.listen(port, function() {
 app.get("/", function(req, res, next) {
   console.log("test");
   res.json("aaaaaaaaaaaaaaaaaaa");
-  res.render("../index");
+  res.redirect("../index");
 });
