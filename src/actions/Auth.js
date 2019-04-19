@@ -41,7 +41,10 @@ export const loginOk = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // ログインボタンを押した後のリダイレクトだったら、その情報をDBに登録(初回ログイン時)(リロード時)
-        if (document.referrer === "" && window.performance !== 1) {
+        if (
+          document.referrer === "" &&
+          window.performance.navigation.type !== 1
+        ) {
           // ログインをしていない場合は、その情報をDBに登録
           loginResult()
             .then(user => dispatch(login(user)))
