@@ -4,7 +4,8 @@ const initialState = {
   uid: null,
   displayName: null,
   token: null,
-  secretKey: null
+  secretKey: null,
+  photoURL: null
 };
 
 export default function authReducer(state = initialState, action) {
@@ -15,7 +16,8 @@ export default function authReducer(state = initialState, action) {
           uid: action.payload.uid,
           displayName: action.payload.displayName,
           token: action.payload.token,
-          secretKey: action.payload.secretKey
+          secretKey: action.payload.secretKey,
+          photoURL: action.payload.photoURL
         };
       } else {
         return state;
@@ -25,7 +27,8 @@ export default function authReducer(state = initialState, action) {
         uid: null,
         displayName: null,
         token: null,
-        secretKey: null
+        secretKey: null,
+        photoURL: null
       };
     default:
       return state;

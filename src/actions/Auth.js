@@ -1,6 +1,6 @@
 import { LOGIN, LOGOUT } from "../constants/Auth";
 
-import firebase from "../firebase";
+import firebase, { firebaseDb } from "../firebase";
 
 const loginResult = async () => {
   // リダイレクトした時の結果を取得
@@ -10,15 +10,27 @@ const loginResult = async () => {
     .getRedirectResult()
     .then(result => {
       if (result.credential) {
-        const token = (user["token"] = result.credential.accessToken);
-        const secretKey = (user["secretKey"] = result.credential.secret);
-        console.log({ token, secretKey });
+        user["token"] = result.credential.accessToken;
+        user["secretKey"] = result.credential.secret;
       }
       if (result.user) {
         // The signed-in user info.
         user["name"] = result.user.displayName;
         user["uid"] = result.user.uid;
+        user["photoURL"] = result.user.photoURL;
       }
+      return user;
+    })
+    .then(user => {
+      // Firebase DB に ユーザーを追加(既にログイン中だったら更新)
+      const ref = firebaseDb.ref("users/" + user.uid);
+      ref.set({
+        name: user.name,
+        token: user.token,
+        secretKey: user.secretKey,
+        photoURL: user.photoURL
+      });
+      return "ok";
     });
   return user;
 };
@@ -26,7 +38,10 @@ const loginResult = async () => {
 export const loginOk = () => {
   return dispatch => {
     loginResult()
-      .then(user => dispatch(login(user)))
+      .then(user => {
+        // firebase
+        dispatch(login(user));
+      })
       .catch(e => console.log({ e }));
   };
 };
@@ -56,6 +71,7 @@ const login = user => ({
     uid: user.uid,
     displayName: user.name,
     token: user.token,
-    secretKey: user.secretKey
+    secretKey: user.secretKey,
+    photoURL: user.photoURL
   }
 });
