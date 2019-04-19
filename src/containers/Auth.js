@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { loginOk, logout, loadTodos } from "../actions/Auth";
+import { loginOk, logout } from "../actions/Auth";
 
 import Login from "../components/Login";
 

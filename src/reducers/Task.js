@@ -168,6 +168,7 @@ export default function taskReducer(state = initialState, action) {
     case "UPDATE_TASK_ERROR":
     case "DELETE_TASK_ERROR":
       alert(action.message);
+      return;
 
     default:
       return state;
