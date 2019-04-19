@@ -13,8 +13,8 @@ import * as serviceWorker from "./serviceWorker";
 const store = createStore();
 ReactDOM.render(
   <Provider store={store}>
-    <Task />
     <LoginButton />
+    <Task />
   </Provider>,
   document.getElementById("root")
 );

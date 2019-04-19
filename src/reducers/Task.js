@@ -21,7 +21,8 @@ const initialState = {
   editTasks: [],
   printTask: ALL,
   mode: NORMAL,
-  todos: []
+  todos: [],
+  uid: ""
 };
 
 export default function taskReducer(state = initialState, action) {
