@@ -10,15 +10,13 @@ import {
   NOT_DONE
 } from "../constants/Task";
 
-// firebase realtime db のtodosテーブル変数
-const ref = firebaseDb.ref("todos");
-
 // firebase RealTime DB への変更を監視
 export function loadTodos() {
-  return dispatch => {
-    ref.off();
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+    firebaseDb.ref("todos/" + uid).off();
     // テーブルの変更を監視する
-    ref.on(
+    firebaseDb.ref("todos/" + uid).on(
       "value",
       snapshot => {
         dispatch(loadTodosSuccess(snapshot));
@@ -66,7 +64,8 @@ export function addTask(task, deadLine) {
   // 入力タスクをDBに保存
   return (dispatch, getState) => {
     const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
-    ref
+    firebaseDb
+      .ref("todos/" + uid)
       .push({
         uid,
         task,
@@ -90,8 +89,9 @@ export function doneTask(taskId) {
     const storeTasks = getState().task.tasks;
     const currentTaskStatus = storeTasks.filter(todo => todo.key === taskId)[0]
       .status;
+    const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
     firebaseDb
-      .ref(`todos/${taskId}`)
+      .ref(`todos/${uid}/${taskId}`)
       .update({ status: currentTaskStatus === DONE ? NOT_DONE : DONE })
       .catch(error => {
         dispatch({
@@ -129,6 +129,7 @@ export function deleteTask(taskId) {
   if (window.confirm("削除してよろしいですか")) {
     return (dispatch, getState) => {
       let storeTasks = getState().task.tasks.slice();
+      const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
       let indexKey;
       storeTasks.forEach((v, key) => {
         if (v.key === taskId) {
@@ -138,7 +139,7 @@ export function deleteTask(taskId) {
       storeTasks.splice(indexKey, 1);
       // パスをオブジェクトを削除
       firebaseDb
-        .ref(`todos/${taskId}`)
+        .ref(`todos/${uid}/${taskId}`)
         .remove()
         .catch(error =>
           dispatch({
@@ -166,15 +167,19 @@ export function deleteTask(taskId) {
 
 // [編集or完了]ボタンクリック時のアクション、モードが変更される。現状のデータでstoreを更新する
 export function editMode() {
-  return dispatch => {
-    ref.once("value").then(function(snapshot) {
-      dispatch({
-        type: EDIT_MODE,
-        payload: {
-          data: snapshot.val()
-        }
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
+    firebaseDb
+      .ref("todos/" + uid)
+      .once("value")
+      .then(function(snapshot) {
+        dispatch({
+          type: EDIT_MODE,
+          payload: {
+            data: snapshot.val()
+          }
+        });
       });
-    });
   };
 }
 
@@ -203,6 +208,7 @@ export function editDeadLine(date) {
 // タスク編集クリック時のアクション、該当タスクの編集後の値とインデックスが渡される
 export function editTask(taskId) {
   return (dispatch, getState) => {
+    const uid = getState().auth.uid; // 誰がそのタスクを登録したかを取得します
     let storeTasks = getState().task.editTasks.slice();
     let indexKey;
     storeTasks.forEach((v, key) => {
@@ -212,7 +218,7 @@ export function editTask(taskId) {
     });
     storeTasks[indexKey].editting = false;
     firebaseDb
-      .ref(`todos/${taskId}`)
+      .ref(`todos/${uid}/${taskId}`)
       .update({
         task: storeTasks[indexKey].name,
         deadLine: storeTasks[indexKey].deadLine

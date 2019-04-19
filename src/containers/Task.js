@@ -6,12 +6,14 @@ import * as Actions from "../actions/Task";
 
 function mapStateToProps(state) {
   const { task, tasks, editTasks, printTask, mode } = state.task;
+  const uid = state.auth.uid;
   return {
     task,
     tasks,
     editTasks,
     printTask,
-    mode
+    mode,
+    uid
   };
 }
 

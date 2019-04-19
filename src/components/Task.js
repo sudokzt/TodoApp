@@ -19,9 +19,23 @@ const convertDateToStr = date => {
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 };
 
+let updateFlag = false;
+let loadTodos;
+
 export default class TodoApp extends Component {
-  componentDidMount() {
-    this.props.loadTodos();
+  constructor(props) {
+    super(props);
+    loadTodos = this.props.loadTodos;
+  }
+  // ログインしたあとでRealTimeDBの監視を始める
+  // コメントに書くことは出ないがAuthComponentのcomponentDidMountを終えてからDB監視を始める方法がわからんかった
+  // 一番最初の設計でコンポーネントの切り分けが良くなかった気がする
+  // 本来のgetDerivedStateFromProps（）と使い方が異なっているためリファクタリング最優先位置
+  static getDerivedStateFromProps(props) {
+    if (!updateFlag && props.uid) {
+      loadTodos();
+      updateFlag = true;
+    }
   }
 
   render() {
