@@ -25,6 +25,7 @@ const loginResult = async () => {
       // Firebase DB に ユーザーを追加(既にログイン中だったら更新)
       const ref = firebaseDb.ref("users/" + user.uid);
       ref.set({
+        uid: user.uid,
         displayName: user.displayName,
         token: user.token,
         secretKey: user.secretKey,

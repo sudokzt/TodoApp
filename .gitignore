@@ -1,6 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+node_modules
+/node_modules
 /client/node_modules
 /.pnp
 .pnp.js
@@ -26,3 +28,4 @@ yarn-error.log*
 
 # src
 # /firebase/config.js
+tweet-todoapp-firebase-adminsdk-sc6tt-827d132b82.json

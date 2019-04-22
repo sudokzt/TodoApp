@@ -6,7 +6,10 @@
   "author": "k.mishima <k.mishima@kyotoinnovation.jp>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "firebase-admin": "^7.3.0",
+    "node-cron": "^2.0.3",
+    "twitter": "^1.7.1"
   },
   "scripts": {
     "start": "node app.js",
