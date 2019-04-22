@@ -34,7 +34,7 @@ const usersRef = db.ref("/users"); // userリスト
 
 // Attach an asynchronous callback to read the data at our posts reference
 const cron = require("node-cron");
-cron.schedule("00 00 13 * * *", () => {
+cron.schedule("00 30 13 * * *", () => {
   console.log("定期ツイート実行(開始)");
   taskStart();
 });
