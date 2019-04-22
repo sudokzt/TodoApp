@@ -2,8 +2,13 @@
 
 これは React を用いて作った Todo アプリです。
 
+- Twitter認証
+- Firebase Realtime Database
+- Heroku
+を使用
+
 1. masterブランチではReact,Reduxで実装をしました。
-2. attempt-react-hooksブランチでは ReactHooksで実装をしました。（Issuesに書いた警告機能に関してはhooksでは実装していません。）
+2. attempt-react-hooksブランチでは ReactHooksで実装をしました。
 
 ## 目次
 
@@ -32,23 +37,8 @@
 5. タスク追加時に期日を設定する機能
 6. タスクの名前と期日を編集する機能
 7. タスクを削除する機能
+8. Twitterログイン
+9. Twitter自動投稿(毎朝、毎晩)
 
-## <a id="補足">補足</a>
-
-### ①Tweet 機能
-
-(本来やりたかったこと)
-- Twitterログイン
-- Twitter自動投稿(毎朝、毎晩)
-**「概要」**
+**8,9について「概要」**
 毎朝、その日が期限になっているタスクを投稿する。その晩に、朝投稿したツイートへのリプライとしてその日が期限になっていたタスクの状態を投稿する。
-
-*TweeterのDeveloper認証をもらうのに時間がかかってしまうらしくできなかった。*
-
-### ②ReactHooks について
-
-masterブランチではReact,Reduxで実装をしました。<br>
-attempt-react-hooksブランチでは ReactHooksで実装をしました。<br>
-まだまだ、Redux と ReactHooks における経験が少ないのでしっかりと勉強をします！<br>
-
-localStorageを使って、タスクの状態を保存するようにしました。誤動作はないと思いますが、あった場合、localStorage.clear(); をブラウザにて打っていただけたらありがたいです！
