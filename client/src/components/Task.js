@@ -15,7 +15,7 @@ import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
 // Date型からstr型へ変換する関数
 const convertDateToStr = date => {
   date = new Date(date);
-  date.setTime(date.getTime() + 1000 * 60 * 60 * 9); // JSTに変換
+  // date.setTime(date.getTime() + 1000 * 60 * 60 * 9); // JSTに変換(サーバー側がJSTの場合いらない)
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
 };
 
