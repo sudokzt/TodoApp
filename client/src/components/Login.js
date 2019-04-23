@@ -20,22 +20,26 @@ export default class LoginButton extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {!this.props.uid ? (
-          <button id="login-button" onClick={() => handleLoginButton()}>
-            ログイン
-          </button>
-        ) : (
-          <section>
-            <img alt="アイコン" src={this.props.photoURL} />
-            <span>{this.props.displayName}</span>
-            <button id="logout-button" onClick={() => this.props.logout()}>
-              ログアウト
+    if (this.props.loginning) {
+      return <div>...読み込み中</div>;
+    } else {
+      return (
+        <div>
+          {!this.props.uid ? (
+            <button id="login-button" onClick={() => handleLoginButton()}>
+              ログイン
             </button>
-          </section>
-        )}
-      </div>
-    );
+          ) : (
+            <section>
+              <img alt="アイコン" src={this.props.photoURL} />
+              <span>{this.props.displayName}</span>
+              <button id="logout-button" onClick={() => this.props.logout()}>
+                ログアウト
+              </button>
+            </section>
+          )}
+        </div>
+      );
+    }
   }
 }

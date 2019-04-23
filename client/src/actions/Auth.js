@@ -36,9 +36,19 @@ const loginResult = async () => {
   return userInfo;
 };
 
+// ログインを開始したことをストアに保存します
+const loginStart = () => ({
+  type: "LOGIN_START"
+});
+// ログインを終了したことをストアに保存します
+const loginFinish = () => ({
+  type: "LOGIN_FINISH"
+});
+
 export const loginOk = () => {
   return dispatch => {
-    // ログインをしている場合は、ログイン情報を取得
+    dispatch(loginStart());
+    // 既にログインをしている（セッション保持をされている）場合は、ログイン情報を取得
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         // ログインボタンを押した後のリダイレクトだったら、その情報をDBに登録(初回ログイン時)(リロード時)
@@ -55,6 +65,7 @@ export const loginOk = () => {
         }
       }
     });
+    dispatch(loginFinish());
   };
 };
 
