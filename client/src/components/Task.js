@@ -1,16 +1,15 @@
 import React from "react";
-import DatePicker from "react-datepicker";
 import PropTypes from "prop-types";
 
 import "../css/task.css";
 // date-pickerのcss
 import "react-datepicker/dist/react-datepicker.css";
 
-import Button from "material-ui/Button";
-import Input from "material-ui/Input";
-
-import Header from "../containers/Header";
-import { ALL, DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
+import SelectMode from "./SelectMode";
+import InputTask from "./AddTask";
+import FilterTask from "./FilterTask";
+import Task from "./TaskList";
+import { DONE, NOT_DONE, NORMAL, EDIT } from "../constants/Task";
 
 // Date型からstr型へ変換する関数
 const convertDateToStr = date => {
@@ -34,8 +33,8 @@ export default function TodoApp(props) {
     deleteTask,
     selectTaskType,
     selectDeadLine,
-    editMode,
     inputEditingTask,
+    editMode,
     editTask,
     editDeadLine,
     uid
@@ -70,71 +69,22 @@ export default function TodoApp(props) {
     printTasks = printTasks.filter(task => task.status === NOT_DONE);
 
   /*************************************************************************************************************/
-
   return (
     <div>
-      <Header />
+      {/* 通常・編集モード切り替えコンポーネント */}
+      <SelectMode func={editMode} toggleMode={toggleMode} />
 
-      <section className="mode">
-        <span className="section-title">モード選択</span>
-        <Button
-          raised
-          color="primary"
-          onClick={() => editMode()}
-          className="button"
-        >
-          {toggleMode}モードへ
-        </Button>
-      </section>
+      {/* タスク追加コンポーネント */}
+      <InputTask
+        task={task}
+        addTask={addTask}
+        inputTask={inputTask}
+        selectDeadLine={selectDeadLine}
+        mode={mode}
+      />
 
-      {/* 通常モードでは「タスク追加フォーム」表示 */}
-      {(() => {
-        if (mode === NORMAL) {
-          return (
-            <section className="add-task">
-              <div className="section-title">タスクの追加</div>
-              <Input
-                id="input_task_area"
-                onChange={e => inputTask(e.target.value)}
-              />
-              <DatePicker
-                dateFormat="yyyy/MM/dd"
-                selected={new Date(task.deadLine)}
-                onChange={selectDeadLine}
-                className="input-date"
-              />
-              <Button
-                raised
-                color="primary"
-                onClick={() =>
-                  addTask(task.name, convertDateToStr(task.deadLine))
-                }
-                className="button"
-              >
-                追加
-              </Button>
-            </section>
-          );
-        }
-      })()}
-
-      {/* 「タスク絞り込みボタン」表示 */}
-      <section className="filter-tasks">
-        <div className="section-title">タスクの絞り込み</div>
-        <Button raised onClick={() => selectTaskType(ALL)}>
-          {ALL}
-        </Button>
-        <Button
-          raised
-          onClick={() => selectTaskType(NOT_DONE)}
-          className="button"
-        >
-          {NOT_DONE}
-        </Button>
-        <Button raised onClick={() => selectTaskType(DONE)} className="button">
-          {DONE}
-        </Button>
-      </section>
+      {/* 表示タスク絞り込みコンポーネント */}
+      <FilterTask selectTaskType={selectTaskType} />
 
       {/* 「タスク一覧」表示 */}
       <section className="print-tasks">
@@ -156,67 +106,16 @@ export default function TodoApp(props) {
               <div key={item.key}>
                 {dateDOM}
                 <li className="task-item">
-                  {/* モードによって返すDOMを変更 */}
-                  {(() => {
-                    /* 通常モードは「タスクの完了・未完了ボタン」表示 */
-                    if (mode === NORMAL) {
-                      return (
-                        <div>
-                          <span className="task-name">{item.name}</span>
-                          <Button
-                            raised
-                            onClick={() => doneTask(item.key)}
-                            className="button"
-                          >
-                            {item.status}
-                          </Button>
-                        </div>
-                      );
-                    } else {
-                      /* 編集モード「タスク編集フォーム」表示 */
-                      return (
-                        <div>
-                          <Input
-                            value={item.name}
-                            onChange={e =>
-                              inputEditingTask(e.target.value, item.key)
-                            }
-                          />
-                          <DatePicker
-                            dateFormat="yyyy/MM/dd"
-                            selected={new Date(item.deadLine)}
-                            onChange={editDeadLine}
-                            className={`${String(item.key)} input-date`}
-                          />
-                          <Button
-                            raised
-                            onClick={() => editTask(item.key)}
-                            className="button"
-                          >
-                            更新
-                          </Button>
-                          <Button
-                            raised
-                            color="secondary"
-                            onClick={() => deleteTask(item.key)}
-                            className="button"
-                          >
-                            削除
-                          </Button>
-                          {(() => {
-                            if (item.editting === true) {
-                              return (
-                                <span className="editting-message">
-                                  <i className="fas fa-exclamation-triangle warnning" />
-                                  変更が保存されていません
-                                </span>
-                              );
-                            }
-                          })()}
-                        </div>
-                      );
-                    }
-                  })()}
+                  {/* タスクコンポーネント */}
+                  <Task
+                    item={item}
+                    doneTask={doneTask}
+                    deleteTask={deleteTask}
+                    inputEditingTask={inputEditingTask}
+                    editTask={editTask}
+                    editDeadLine={editDeadLine}
+                    mode={mode}
+                  />
                 </li>
               </div>
             );
