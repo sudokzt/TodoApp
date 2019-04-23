@@ -66,7 +66,8 @@ export default function TodoApp(props) {
   );
   if (printTask === DONE)
     printTasks = printTasks.filter(task => task.status === DONE);
-  else printTasks = printTasks.filter(task => task.status === NOT_DONE);
+  else if (printTask === NOT_DONE)
+    printTasks = printTasks.filter(task => task.status === NOT_DONE);
 
   /*************************************************************************************************************/
 
