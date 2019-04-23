@@ -37,16 +37,12 @@ const loginResult = async () => {
 };
 
 // ログインを開始したことをストアに保存します
-const loginStart = () => ({
-  type: "LOGIN_START"
-});
+const loginStart = () => ({ type: "LOGIN_START" });
 // ログインを終了したことをストアに保存します
-const loginFinish = () => ({
-  type: "LOGIN_FINISH"
-});
+const loginFinish = () => ({ type: "LOGIN_FINISH" });
 
 export const loginOk = () => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(loginStart());
     // 既にログインをしている（セッション保持をされている）場合は、ログイン情報を取得
     firebase.auth().onAuthStateChanged(user => {
@@ -64,8 +60,8 @@ export const loginOk = () => {
           dispatch(login(user));
         }
       }
+      dispatch(loginFinish());
     });
-    dispatch(loginFinish());
   };
 };
 

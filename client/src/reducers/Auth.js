@@ -12,6 +12,7 @@ export default function authReducer(state = initialState, action) {
     case LOGIN:
       if (action.payload.uid) {
         return {
+          ...state,
           uid: action.payload.uid,
           displayName: action.payload.displayName,
           photoURL: action.payload.photoURL,
@@ -27,19 +28,22 @@ export default function authReducer(state = initialState, action) {
       return {
         uid: null,
         displayName: null,
-        photoURL: null
+        photoURL: null,
+        loginning: false
       };
     case "LOGIN_START":
       return {
         ...state,
-        loginning: false
+        loginning: true
       };
     case "LOGIN_FINISH":
       return {
         ...state,
-        loginning: true
+        loginning: false
       };
     default:
-      return state;
+      return {
+        ...state
+      };
   }
 }
