@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../constants/Auth";
+import { LOGIN, LOGOUT, LOGIN_START, LOGIN_FINISH } from "../constants/Auth";
 
 const initialState = {
   uid: null,
@@ -30,12 +30,12 @@ export default function authReducer(state = initialState, action) {
         photoURL: null,
         loginning: false
       };
-    case "LOGIN_START":
+    case LOGIN_START:
       return {
         ...state,
         loginning: true
       };
-    case "LOGIN_FINISH":
+    case LOGIN_FINISH:
       return {
         ...state,
         loginning: false

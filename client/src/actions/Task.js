@@ -1,5 +1,6 @@
 import { firebaseDb } from "../firebase";
 import {
+  TODOS_RECEIVE_DATA,
   INPUT_TASK,
   SELECT_TASKTYPE,
   SELECT_DATE,
@@ -7,7 +8,9 @@ import {
   INPUT_EDITTING_TASK,
   EDIT_DATE,
   DONE,
-  NOT_DONE
+  NOT_DONE,
+  AFTER_DELETE,
+  AFTER_EDIT
 } from "../constants/Task";
 
 // firebase RealTime DB への変更を監視
@@ -30,7 +33,7 @@ export function loadTodos() {
 // ロード成功時コールバック
 function loadTodosSuccess(snapshot) {
   return {
-    type: "TODOS_RECEIVE_DATA",
+    type: TODOS_RECEIVE_DATA,
     payload: {
       data: snapshot.val()
     }
@@ -151,7 +154,7 @@ export function deleteTask(taskId) {
         )
         .then(() =>
           dispatch({
-            type: "AFTER_DELETE",
+            type: AFTER_DELETE,
             payload: {
               editTasks: storeTasks
             }
@@ -233,7 +236,7 @@ export function editTask(taskId) {
       })
       .then(() =>
         dispatch({
-          type: "AFTER_EDIT",
+          type: AFTER_EDIT,
           payload: {
             editTasks: storeTasks
           }

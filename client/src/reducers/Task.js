@@ -2,12 +2,15 @@ import {
   ALL,
   NORMAL,
   EDIT,
+  TODOS_RECEIVE_DATA,
   INPUT_TASK,
   SELECT_TASKTYPE,
   SELECT_DATE,
   EDIT_MODE,
   INPUT_EDITTING_TASK,
-  EDIT_DATE
+  EDIT_DATE,
+  AFTER_EDIT,
+  AFTER_DELETE
 } from "../constants/Task";
 
 const initialState = {
@@ -30,7 +33,7 @@ export default function taskReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     // DB の変更があったら最新のtodoリストを返します
-    case "TODOS_RECEIVE_DATA": {
+    case TODOS_RECEIVE_DATA: {
       let tasks = [];
       let data = action.payload.data;
       if (data) {
@@ -149,14 +152,14 @@ export default function taskReducer(state = initialState, action) {
       };
     }
 
-    case "AFTER_EDIT": {
+    case AFTER_EDIT: {
       return {
         ...state,
         editTasks: action.payload.editTasks
       };
     }
 
-    case "AFTER_DELETE": {
+    case AFTER_DELETE: {
       return {
         ...state,
         editTasks: action.payload.editTasks

@@ -8,13 +8,12 @@ export const NORMAL = "通常";
 export const EDIT = "編集";
 
 // アクションタイプ
-export const INPUT_TASK = "INPUT_TASK";
-export const ADD_TASK = "ADD_TASK";
-export const DONE_TASK = "DONE_TASK";
-export const SELECT_TASKTYPE = "SELECT_TASKTYPE"; // 表示するタスク状態を選択
-export const SELECT_DATE = "SELECT_DATE";
-export const DELETE_TASK = "DELETE_TASK";
-export const EDIT_MODE = "EDIT_MODE";
-export const INPUT_EDITTING_TASK = "INPUT_EDITTING_TASK"; // 編集中（編集モードにて入力中）
-export const EDIT_DATE = "EDIT_DATE"; // 編集モードにてカレンダー選択
-export const EDIT_TASK = "EDIT_TASK"; // 編集モードにて更新ボタンクリック時
+export const TODOS_RECEIVE_DATA = Symbol("TODOS_RECEIVE_DATA");
+export const INPUT_TASK = Symbol("INPUT_TASK");
+export const SELECT_TASKTYPE = Symbol("SELECT_TASKTYPE"); // 表示するタスク状態を選択
+export const SELECT_DATE = Symbol("SELECT_DATE");
+export const EDIT_MODE = Symbol("EDIT_MODE");
+export const INPUT_EDITTING_TASK = Symbol("INPUT_EDITTING_TASK"); // 編集中（編集モードにて入力中）
+export const EDIT_DATE = Symbol("EDIT_DATE"); // 編集モードにてカレンダー選択
+export const AFTER_EDIT = Symbol("AFTER_EDIT");
+export const AFTER_DELETE = Symbol("AFTER_DELETE");

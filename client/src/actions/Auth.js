@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../constants/Auth";
+import { LOGIN, LOGOUT, LOGIN_START, LOGIN_FINISH } from "../constants/Auth";
 
 import firebase, { firebaseDb } from "../firebase";
 
@@ -37,9 +37,9 @@ const loginResult = async () => {
 };
 
 // ログインを開始したことをストアに保存します
-const loginStart = () => ({ type: "LOGIN_START" });
+const loginStart = () => ({ type: LOGIN_START });
 // ログインを終了したことをストアに保存します
-const loginFinish = () => ({ type: "LOGIN_FINISH" });
+const loginFinish = () => ({ type: LOGIN_FINISH });
 
 export const loginOk = () => {
   return async dispatch => {

@@ -42,45 +42,33 @@ export default function TodoApp(props) {
   } = { ...props };
 
   // ログイン前だったらログインボタン以外は表示させません
-  if (uid === null) {
-    return <div />;
-  }
+  if (uid === null) return <div />;
 
-  // ログイン後にFirebase RealTime DB の監視を始めます。DBの変更があるたびに、state(store)を更新します
+  // 「モード変更ボタンには」現在のモードと逆のものを表示します。
+  const toggleMode = mode === NORMAL ? EDIT : NORMAL;
+  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておく
+  let prevItemDate = convertDateToStr(new Date(1990, 1, 1));
+
+  // ログイン後にFirebase RealTime DB の監視を始めます。DBの変更があるたびに、storeを更新します。
   if (!updateFlag && uid) {
     props.loadTodos();
     updateFlag = true;
   }
 
-  const toggleMode = mode === NORMAL ? EDIT : NORMAL; // 「モード変更ボタンには」現在のモードと逆のものを表示するため
   /*************************************************************************************************************/
   // 表示するタスク一覧に絞り込み
   let printTasks;
-  if (mode === NORMAL) {
-    printTasks = tasks.slice();
-  } else {
-    printTasks = editTasks.slice();
-  }
+  if (mode === NORMAL) printTasks = tasks.slice();
+  else printTasks = editTasks.slice();
   // ソート
-  printTasks.sort((a, b) => {
-    return new Date(a.deadLine) > new Date(b.deadLine) ? 1 : -1;
-  });
-
-  switch (printTask) {
-    case DONE:
-      printTasks = printTasks.filter(task => task.status === DONE);
-      break;
-    case NOT_DONE:
-      printTasks = printTasks.filter(task => task.status === NOT_DONE);
-      break;
-    default:
-      break;
-  }
+  printTasks.sort((date1, date2) =>
+    new Date(date1.deadLine) > new Date(date2.deadLine) ? 1 : -1
+  );
+  if (printTask === DONE)
+    printTasks = printTasks.filter(task => task.status === DONE);
+  else printTasks = printTasks.filter(task => task.status === NOT_DONE);
 
   /*************************************************************************************************************/
-
-  // 期限単位で表示をまとめるために1つ前に表示した日付を保持しておく
-  let prevItemDate = convertDateToStr(new Date(1990, 1, 1));
 
   return (
     <div>
@@ -97,8 +85,9 @@ export default function TodoApp(props) {
           {toggleMode}モードへ
         </Button>
       </section>
+
+      {/* 通常モードでは「タスク追加フォーム」表示 */}
       {(() => {
-        /* 通常モード */
         if (mode === NORMAL) {
           return (
             <section className="add-task">
@@ -127,6 +116,8 @@ export default function TodoApp(props) {
           );
         }
       })()}
+
+      {/* 「タスク絞り込みボタン」表示 */}
       <section className="filter-tasks">
         <div className="section-title">タスクの絞り込み</div>
         <Button raised onClick={() => selectTaskType(ALL)}>
@@ -143,10 +134,12 @@ export default function TodoApp(props) {
           {DONE}
         </Button>
       </section>
+
+      {/* 「タスク一覧」表示 */}
       <section className="print-tasks">
         <ul className="tasks-list">
+          {/* 期限単位で表示をまとめる */}
           {printTasks.map(item => {
-            // 期限単位で表示をまとめる
             let dateDOM = <span />;
             const itemDate = convertDateToStr(item.deadLine);
             if (itemDate !== prevItemDate) {
@@ -162,9 +155,9 @@ export default function TodoApp(props) {
               <div key={item.key}>
                 {dateDOM}
                 <li className="task-item">
+                  {/* モードによって返すDOMを変更 */}
                   {(() => {
-                    // モードによって返すDOMを変更
-                    /* 通常モード */
+                    /* 通常モードは「タスクの完了・未完了ボタン」表示 */
                     if (mode === NORMAL) {
                       return (
                         <div>
@@ -179,7 +172,7 @@ export default function TodoApp(props) {
                         </div>
                       );
                     } else {
-                      /* 編集モード */
+                      /* 編集モード「タスク編集フォーム」表示 */
                       return (
                         <div>
                           <Input
@@ -233,7 +226,6 @@ export default function TodoApp(props) {
   );
 }
 
-// 型指定
 TodoApp.propTypes = {
   task: PropTypes.object.isRequired,
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,

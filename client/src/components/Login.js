@@ -14,7 +14,6 @@ export default class LoginButton extends Component {
   }
 
   render() {
-    console.log(this.props.loginning);
     if (this.props.loginning) {
       return <div>...読み込み中</div>;
     } else {
