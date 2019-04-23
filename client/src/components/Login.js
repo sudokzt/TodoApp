@@ -2,12 +2,6 @@ import React, { Component } from "react";
 
 import firebase, { providerTwitter } from "../firebase/";
 
-// // twitter API APPの各キーを取得
-// const REACT_APP_TWITTER_CUTOMER_SECRET_KEY =
-//   process.env.REACT_APP_TWITTER_CUTOMER_SECRET_KEY;
-// const REACT_APP_TWITTER_CUSTOMER_KEY =
-//   process.env.REACT_APP_TWITTER_CUSTOMER_KEY;
-
 // ログインハンドラー
 const handleLoginButton = () => {
   // リダイレクトにてTwitterログイン画面を開く

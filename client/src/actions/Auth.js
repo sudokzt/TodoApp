@@ -65,6 +65,18 @@ export const loginOk = () => {
   };
 };
 
+// ログインアクションクリエーター
+const login = user => {
+  return {
+    type: LOGIN,
+    payload: {
+      uid: user.uid,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+    }
+  };
+};
+// ログアウトアクションクリエーター
 export const logout = () => {
   firebase
     .auth()
@@ -81,16 +93,5 @@ export const logout = () => {
     });
   return {
     type: LOGOUT
-  };
-};
-
-const login = user => {
-  return {
-    type: LOGIN,
-    payload: {
-      uid: user.uid,
-      displayName: user.displayName,
-      photoURL: user.photoURL
-    }
   };
 };

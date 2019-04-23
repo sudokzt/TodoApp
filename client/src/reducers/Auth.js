@@ -12,7 +12,6 @@ export default function authReducer(state = initialState, action) {
     case LOGIN:
       if (action.payload.uid) {
         return {
-          ...state,
           uid: action.payload.uid,
           displayName: action.payload.displayName,
           photoURL: action.payload.photoURL,
@@ -42,8 +41,6 @@ export default function authReducer(state = initialState, action) {
         loginning: false
       };
     default:
-      return {
-        ...state
-      };
+      return state;
   }
 }
