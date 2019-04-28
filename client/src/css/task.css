@@ -34,8 +34,8 @@ section.add-task {
 }
 .task-name {
   display: inline-block;
-  width: 300px;
   word-wrap: break-word;
+  flex-grow: 4;
 }
 .editting-message {
   margin-left: 10px;

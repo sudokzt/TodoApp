@@ -11,8 +11,8 @@ export default function Task(props) {
   /* 通常モードは「タスクの完了・未完了ボタン」表示 */
   if (props.mode === NORMAL) {
     return (
-      <div>
-        <span className="task-name">{props.item.name}</span>
+      <div style={{ display: "flex" }}>
+        <div className="task-name">{props.item.name}</div>
         <Button
           raised
           onClick={() => props.doneTask(props.item.key)}
