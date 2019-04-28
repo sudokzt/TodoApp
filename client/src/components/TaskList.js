@@ -26,31 +26,40 @@ export default function Task(props) {
     /* 編集モード「タスク編集フォーム」表示 */
     return (
       <div>
-        <Input
-          value={props.item.name}
-          onChange={e => props.inputEditingTask(e.target.value, props.item.key)}
-        />
-        <DatePicker
-          dateFormat="yyyy/MM/dd"
-          selected={new Date(props.item.deadLine)}
-          onChange={props.editDeadLine}
-          className={`${String(props.item.key)} input-date`}
-        />
-        <Button
-          raised
-          onClick={() => props.editTask(props.item.key)}
-          className="button"
-        >
-          更新
-        </Button>
-        <Button
-          raised
-          color="secondary"
-          onClick={() => props.deleteTask(props.item.key)}
-          className="button"
-        >
-          削除
-        </Button>
+        <div style={{ display: "flex" }}>
+          <div className="task-name">
+            <Input
+              value={props.item.name}
+              onChange={e =>
+                props.inputEditingTask(e.target.value, props.item.key)
+              }
+            />
+            <DatePicker
+              dateFormat="yyyy/MM/dd"
+              selected={new Date(props.item.deadLine)}
+              onChange={props.editDeadLine}
+              className={`${String(props.item.key)} input-date`}
+            />
+          </div>
+          <div>
+            <Button
+              raised
+              onClick={() => props.editTask(props.item.key)}
+              className="button"
+            >
+              更新
+            </Button>
+            <Button
+              raised
+              color="secondary"
+              onClick={() => props.deleteTask(props.item.key)}
+              className="button"
+            >
+              削除
+            </Button>
+          </div>
+        </div>
+
         {(() => {
           if (props.item.editting === true) {
             return (
