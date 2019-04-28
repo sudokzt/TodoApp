@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import firebase, { providerTwitter } from "../firebase/";
 
+import style from "../css/Login.module.css";
+
 // ログインハンドラー
 const handleLoginButton = () => {
   // リダイレクトにてTwitterログイン画面を開く
@@ -20,17 +22,30 @@ export default class LoginButton extends Component {
       return (
         <div>
           {!this.props.uid ? (
-            <button id="login-button" onClick={() => handleLoginButton()}>
-              ログイン
-            </button>
+            <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+              <div
+                className={style.login__button}
+                onClick={() => handleLoginButton()}
+              >
+                ログイン
+              </div>
+            </div>
           ) : (
-            <section>
-              <img alt="アイコン" src={this.props.photoURL} />
-              <span>{this.props.displayName}</span>
-              <button id="logout-button" onClick={() => this.props.logout()}>
+            <div style={{ display: "flex", flexDirection: "row-reverse" }}>
+              <div
+                className={style.login__button}
+                onClick={() => this.props.logout()}
+              >
                 ログアウト
-              </button>
-            </section>
+              </div>
+              <div>
+                <img
+                  className={style.myIcon}
+                  alt="アイコン"
+                  src={this.props.photoURL}
+                />
+              </div>
+            </div>
           )}
         </div>
       );

@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import "./index.css";
 import Header from "./containers/Header";
 import Task from "./containers/Task";
-import LoginButton from "./containers/Auth";
 import createStore from "./store";
 import "./firebase/config";
 
@@ -15,7 +14,6 @@ const store = createStore();
 ReactDOM.render(
   <Provider store={store}>
     <Header />
-    <LoginButton />
     <Task />
   </Provider>,
   document.getElementById("root")
