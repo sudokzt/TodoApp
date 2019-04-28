@@ -9,6 +9,7 @@ section.add-task {
 }
 .button {
   margin-left: 15px;
+  margin-bottom: 2px;
 }
 .input-date {
   margin-left: 10px;
@@ -34,8 +35,8 @@ section.add-task {
 }
 .task-name {
   display: inline-block;
-  width: 300px;
   word-wrap: break-word;
+  flex-grow: 4;
 }
 .editting-message {
   margin-left: 10px;
